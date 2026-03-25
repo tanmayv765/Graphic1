@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Return Forecaster</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <nav class="site-nav">
+        <a class="nav-link nav-link-active" href="./index.html">Stock Forecaster</a>
+        <a class="nav-link" href="./compare.html">Stocks vs Bonds</a>
+      </nav>
+
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Long-term investing visualizer</p>
+          <h1>See how stock investments can compound over time.</h1>
+          <p class="hero-text">
+            Explore projected returns for popular stocks, adjust assumptions,
+            and compare how one-time and monthly investments grow year after
+            year.
+          </p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-stat">
+            <span class="label">Projected portfolio value</span>
+            <strong id="heroFutureValue">$0</strong>
+          </div>
+          <div class="hero-stat">
+            <span class="label">Total gain</span>
+            <strong id="heroGain">$0</strong>
+          </div>
+          <p class="hero-note">
+            Estimates use an editable annual return assumption and monthly
+            compounding.
+          </p>
+        </div>
+      </header>
+
+      <main class="content-grid">
+        <section class="panel controls-panel">
+          <div class="panel-heading">
+            <h2>Investment setup</h2>
+            <p>Choose a stock profile and tweak the growth assumptions.</p>
+          </div>
+
+          <div class="control-group">
+            <label for="stockSelect">Stock preset</label>
+            <select id="stockSelect"></select>
+          </div>
+
+          <div class="control-grid">
+            <div class="control-group">
+              <label for="initialInvestment">Initial investment</label>
+              <input id="initialInvestment" type="number" min="0" step="100" />
+            </div>
+            <div class="control-group">
+              <label for="monthlyContribution">Monthly contribution</label>
+              <input id="monthlyContribution" type="number" min="0" step="50" />
+            </div>
+            <div class="control-group">
+              <label for="years">Time horizon (years)</label>
+              <input id="years" type="number" min="1" max="50" step="1" />
+            </div>
+            <div class="control-group">
+              <label for="annualReturn">Expected annual return (%)</label>
+              <input id="annualReturn" type="number" min="-50" max="50" step="0.1" />
+            </div>
+          </div>
+
+          <div class="preset-notes" id="presetNotes"></div>
+
+          <div class="disclaimer">
+            These are educational projections, not guarantees or financial
+            advice. Real market returns vary.
+          </div>
+        </section>
+
+        <section class="panel results-panel">
+          <div class="panel-heading">
+            <h2>Projection snapshot</h2>
+            <p>Updated instantly as you adjust the assumptions.</p>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card">
+              <span class="metric-label">Ending value</span>
+              <strong class="metric-value" id="futureValue">$0</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Total invested</span>
+              <strong class="metric-value" id="totalInvested">$0</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Investment gain</span>
+              <strong class="metric-value" id="totalGain">$0</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Return multiple</span>
+              <strong class="metric-value" id="returnMultiple">0.00x</strong>
+            </article>
+          </div>
+
+          <div class="chart-panel">
+            <div class="chart-header">
+              <h3>Growth over time</h3>
+              <span id="chartCaption">Year-by-year projection</span>
+            </div>
+            <svg id="projectionChart" viewBox="0 0 760 320" role="img" aria-label="Investment projection chart"></svg>
+          </div>
+        </section>
+
+        <section class="panel table-panel">
+          <div class="panel-heading">
+            <h2>Yearly breakdown</h2>
+            <p>See contributions and projected portfolio value each year.</p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Total invested</th>
+                  <th>Projected value</th>
+                  <th>Gain</th>
+                </tr>
+              </thead>
+              <tbody id="projectionTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

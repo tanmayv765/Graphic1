@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stocks vs Bonds</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <nav class="site-nav">
+        <a class="nav-link" href="./index.html">Stock Forecaster</a>
+        <a class="nav-link nav-link-active" href="./compare.html">Stocks vs Bonds</a>
+      </nav>
+
+      <header class="hero simple-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Simple comparison</p>
+          <h1>Stocks usually grow faster. Bonds are usually steadier.</h1>
+          <p class="hero-text">
+            Enter a few numbers below to see how the two choices can look over
+            time. This is a simple learning tool, not a prediction.
+          </p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-stat">
+            <span class="label">Stock value</span>
+            <strong id="stockEndingValue">$0</strong>
+          </div>
+          <div class="hero-stat">
+            <span class="label">Bond value</span>
+            <strong id="bondEndingValue">$0</strong>
+          </div>
+          <p class="hero-note" id="compareHeadline">
+            Enter values to compare the two paths.
+          </p>
+        </div>
+      </header>
+
+      <main class="content-grid">
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>Try your own numbers</h2>
+            <p>Keep it simple: amount, time, stock return, bond return.</p>
+          </div>
+
+          <div class="control-grid">
+            <div class="control-group">
+              <label for="compareAmount">Starting amount</label>
+              <input id="compareAmount" type="number" min="0" step="100" />
+            </div>
+            <div class="control-group">
+              <label for="compareYears">Years</label>
+              <input id="compareYears" type="number" min="1" max="50" step="1" />
+            </div>
+            <div class="control-group">
+              <label for="stockReturnInput">Stock return (%)</label>
+              <input id="stockReturnInput" type="number" min="-50" max="50" step="0.1" />
+            </div>
+            <div class="control-group">
+              <label for="bondReturnInput">Bond return (%)</label>
+              <input id="bondReturnInput" type="number" min="-50" max="50" step="0.1" />
+            </div>
+          </div>
+
+          <div class="compare-notes">
+            <article class="mini-note">
+              <h3>Stocks</h3>
+              <p>Usually offer higher growth, but prices move around more.</p>
+            </article>
+            <article class="mini-note">
+              <h3>Bonds</h3>
+              <p>Usually grow more slowly, but are often used for stability.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>Visual difference</h2>
+            <p>A simple graphic showing where each path ends.</p>
+          </div>
+
+          <div class="compare-bars">
+            <div class="compare-bar-card">
+              <div class="compare-bar-label-row">
+                <span>Stocks</span>
+                <strong id="stockBarLabel">$0</strong>
+              </div>
+              <div class="compare-bar-track">
+                <div class="compare-bar compare-bar-stocks" id="stockBar"></div>
+              </div>
+            </div>
+
+            <div class="compare-bar-card">
+              <div class="compare-bar-label-row">
+                <span>Bonds</span>
+                <strong id="bondBarLabel">$0</strong>
+              </div>
+              <div class="compare-bar-track">
+                <div class="compare-bar compare-bar-bonds" id="bondBar"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="compare-summary">
+            <article class="metric-card">
+              <span class="metric-label">Difference</span>
+              <strong class="metric-value" id="differenceValue">$0</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Simple takeaway</span>
+              <strong class="metric-value compare-takeaway" id="takeawayText">Stocks lead by $0</strong>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./compare.js"></script>
+  </body>
+</html>
