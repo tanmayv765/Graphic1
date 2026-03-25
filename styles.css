@@ -32,6 +32,7 @@ body {
   padding: 32px 0 48px;
 }
 
+<<<<<<< HEAD
 .site-nav {
   display: flex;
   gap: 10px;
@@ -55,6 +56,8 @@ body {
   border-color: transparent;
 }
 
+=======
+>>>>>>> 0fc5225c07d88a47848b3757f862a1bba7ecfca6
 .hero {
   display: grid;
   grid-template-columns: 1.4fr 0.9fr;
@@ -63,10 +66,13 @@ body {
   margin-bottom: 24px;
 }
 
+<<<<<<< HEAD
 .simple-hero h1 {
   max-width: 12ch;
 }
 
+=======
+>>>>>>> 0fc5225c07d88a47848b3757f862a1bba7ecfca6
 .hero-copy,
 .hero-card,
 .panel {
@@ -270,6 +276,7 @@ select:focus {
   overflow-x: auto;
 }
 
+<<<<<<< HEAD
 .compare-notes,
 .compare-summary {
   display: grid;
@@ -336,6 +343,8 @@ select:focus {
   font-size: clamp(1.1rem, 2.4vw, 1.6rem);
 }
 
+=======
+>>>>>>> 0fc5225c07d88a47848b3757f862a1bba7ecfca6
 table {
   width: 100%;
   border-collapse: collapse;
@@ -388,9 +397,13 @@ tbody tr:hover {
   }
 
   .control-grid,
+<<<<<<< HEAD
   .metric-grid,
   .compare-notes,
   .compare-summary {
+=======
+  .metric-grid {
+>>>>>>> 0fc5225c07d88a47848b3757f862a1bba7ecfca6
     grid-template-columns: 1fr;
   }
 

@@ -24,11 +24,11 @@
         </div>
         <div class="hero-card">
           <div class="hero-stat">
-            <span class="label">Stock value</span>
+            <span class="label">Real stock value</span>
             <strong id="stockEndingValue">$0</strong>
           </div>
           <div class="hero-stat">
-            <span class="label">Bond value</span>
+            <span class="label">Real bond value</span>
             <strong id="bondEndingValue">$0</strong>
           </div>
           <p class="hero-note" id="compareHeadline">
@@ -61,6 +61,10 @@
               <label for="bondReturnInput">Bond return (%)</label>
               <input id="bondReturnInput" type="number" min="-50" max="50" step="0.1" />
             </div>
+            <div class="control-group">
+              <label for="compareInflation">Inflation rate (%)</label>
+              <input id="compareInflation" type="number" min="0" max="20" step="0.1" />
+            </div>
           </div>
 
           <div class="compare-notes">
@@ -78,13 +82,13 @@
         <section class="panel">
           <div class="panel-heading">
             <h2>Visual difference</h2>
-            <p>A simple graphic showing where each path ends.</p>
+            <p>A simple graphic showing real value after inflation.</p>
           </div>
 
           <div class="compare-bars">
             <div class="compare-bar-card">
               <div class="compare-bar-label-row">
-                <span>Stocks</span>
+                <span>Stocks real value</span>
                 <strong id="stockBarLabel">$0</strong>
               </div>
               <div class="compare-bar-track">
@@ -94,7 +98,7 @@
 
             <div class="compare-bar-card">
               <div class="compare-bar-label-row">
-                <span>Bonds</span>
+                <span>Bonds real value</span>
                 <strong id="bondBarLabel">$0</strong>
               </div>
               <div class="compare-bar-track">
@@ -105,7 +109,7 @@
 
           <div class="compare-summary">
             <article class="metric-card">
-              <span class="metric-label">Difference</span>
+              <span class="metric-label">Real difference</span>
               <strong class="metric-value" id="differenceValue">$0</strong>
             </article>
             <article class="metric-card">

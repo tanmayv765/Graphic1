@@ -12,7 +12,6 @@
         <a class="nav-link nav-link-active" href="./index.html">Stock Forecaster</a>
         <a class="nav-link" href="./compare.html">Stocks vs Bonds</a>
       </nav>
-
       <header class="hero">
         <div class="hero-copy">
           <p class="eyebrow">Long-term investing visualizer</p>
@@ -25,16 +24,16 @@
         </div>
         <div class="hero-card">
           <div class="hero-stat">
-            <span class="label">Projected portfolio value</span>
+            <span class="label">Real portfolio value</span>
             <strong id="heroFutureValue">$0</strong>
           </div>
           <div class="hero-stat">
-            <span class="label">Total gain</span>
+            <span class="label">Real gain</span>
             <strong id="heroGain">$0</strong>
           </div>
           <p class="hero-note">
-            Estimates use an editable annual return assumption and monthly
-            compounding.
+            Estimates use annual return, monthly compounding, and an inflation
+            adjustment in today's dollars.
           </p>
         </div>
       </header>
@@ -68,6 +67,10 @@
               <label for="annualReturn">Expected annual return (%)</label>
               <input id="annualReturn" type="number" min="-50" max="50" step="0.1" />
             </div>
+            <div class="control-group">
+              <label for="inflationRate">Inflation rate (%)</label>
+              <input id="inflationRate" type="number" min="0" max="20" step="0.1" />
+            </div>
           </div>
 
           <div class="preset-notes" id="presetNotes"></div>
@@ -90,12 +93,20 @@
               <strong class="metric-value" id="futureValue">$0</strong>
             </article>
             <article class="metric-card">
+              <span class="metric-label">Real ending value</span>
+              <strong class="metric-value" id="realFutureValue">$0</strong>
+            </article>
+            <article class="metric-card">
               <span class="metric-label">Total invested</span>
               <strong class="metric-value" id="totalInvested">$0</strong>
             </article>
             <article class="metric-card">
-              <span class="metric-label">Investment gain</span>
+              <span class="metric-label">Nominal gain</span>
               <strong class="metric-value" id="totalGain">$0</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Inflation drag</span>
+              <strong class="metric-value" id="inflationDrag">$0</strong>
             </article>
             <article class="metric-card">
               <span class="metric-label">Return multiple</span>
@@ -124,6 +135,7 @@
                   <th>Year</th>
                   <th>Total invested</th>
                   <th>Projected value</th>
+                  <th>Real value</th>
                   <th>Gain</th>
                 </tr>
               </thead>

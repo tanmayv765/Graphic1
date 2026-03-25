@@ -48,10 +48,13 @@ const elements = {
   monthlyContribution: document.querySelector("#monthlyContribution"),
   years: document.querySelector("#years"),
   annualReturn: document.querySelector("#annualReturn"),
+  inflationRate: document.querySelector("#inflationRate"),
   presetNotes: document.querySelector("#presetNotes"),
   futureValue: document.querySelector("#futureValue"),
+  realFutureValue: document.querySelector("#realFutureValue"),
   totalInvested: document.querySelector("#totalInvested"),
   totalGain: document.querySelector("#totalGain"),
+  inflationDrag: document.querySelector("#inflationDrag"),
   returnMultiple: document.querySelector("#returnMultiple"),
   heroFutureValue: document.querySelector("#heroFutureValue"),
   heroGain: document.querySelector("#heroGain"),
@@ -81,12 +84,14 @@ function getInputs() {
     initialInvestment: Math.max(0, Number(elements.initialInvestment.value) || 0),
     monthlyContribution: Math.max(0, Number(elements.monthlyContribution.value) || 0),
     years: Math.min(50, Math.max(1, Number(elements.years.value) || 1)),
-    annualReturn: Number(elements.annualReturn.value) || 0
+    annualReturn: Number(elements.annualReturn.value) || 0,
+    inflationRate: Math.max(0, Number(elements.inflationRate.value) || 0)
   };
 }
 
-function projectInvestment({ initialInvestment, monthlyContribution, years, annualReturn }) {
+function projectInvestment({ initialInvestment, monthlyContribution, years, annualReturn, inflationRate }) {
   const monthlyRate = annualReturn / 100 / 12;
+  const annualInflationFactor = 1 + inflationRate / 100;
   const totalMonths = years * 12;
   let balance = initialInvestment;
   const yearlyData = [];
@@ -102,28 +107,34 @@ function projectInvestment({ initialInvestment, monthlyContribution, years, annu
         year: currentYear,
         totalInvested,
         value: balance,
+        realValue: balance / Math.pow(annualInflationFactor, currentYear),
         gain: balance - totalInvested
       });
     }
   }
 
   const finalYear = yearlyData[yearlyData.length - 1];
+  const realFutureValue = finalYear.realValue;
   return {
     yearlyData,
     futureValue: finalYear.value,
+    realFutureValue,
     totalInvested: finalYear.totalInvested,
     totalGain: finalYear.gain,
+    inflationDrag: finalYear.value - realFutureValue,
     returnMultiple: finalYear.totalInvested === 0 ? 0 : finalYear.value / finalYear.totalInvested
   };
 }
 
 function renderSummary(result) {
   elements.futureValue.textContent = currency.format(result.futureValue);
+  elements.realFutureValue.textContent = currency.format(result.realFutureValue);
   elements.totalInvested.textContent = currency.format(result.totalInvested);
   elements.totalGain.textContent = currency.format(result.totalGain);
+  elements.inflationDrag.textContent = currency.format(result.inflationDrag);
   elements.returnMultiple.textContent = `${result.returnMultiple.toFixed(2)}x`;
-  elements.heroFutureValue.textContent = currency.format(result.futureValue);
-  elements.heroGain.textContent = currency.format(result.totalGain);
+  elements.heroFutureValue.textContent = currency.format(result.realFutureValue);
+  elements.heroGain.textContent = currency.format(result.realFutureValue - result.totalInvested);
 }
 
 function renderTable(yearlyData) {
@@ -135,6 +146,7 @@ function renderTable(yearlyData) {
       <td>${row.year}</td>
       <td>${currency.format(row.totalInvested)}</td>
       <td>${currency.format(row.value)}</td>
+      <td>${currency.format(row.realValue)}</td>
       <td>${currency.format(row.gain)}</td>
     `;
     elements.projectionTableBody.append(tr);
@@ -199,7 +211,7 @@ function renderChart(yearlyData) {
   `;
 
   const finalPoint = yearlyData[yearlyData.length - 1];
-  elements.chartCaption.textContent = `By year ${finalPoint.year}, the projection reaches ${currency.format(finalPoint.value)}.`;
+  elements.chartCaption.textContent = `By year ${finalPoint.year}, the projection reaches ${currency.format(finalPoint.value)} nominally and ${currency.format(finalPoint.realValue)} after inflation.`;
 }
 
 function updateProjection() {
@@ -214,6 +226,7 @@ populatePresets();
 elements.initialInvestment.value = 10000;
 elements.monthlyContribution.value = 500;
 elements.years.value = 10;
+elements.inflationRate.value = 3;
 setPreset(0);
 updateProjection();
 
@@ -222,6 +235,6 @@ elements.stockSelect.addEventListener("change", (event) => {
   updateProjection();
 });
 
-[elements.initialInvestment, elements.monthlyContribution, elements.years, elements.annualReturn].forEach((input) => {
+[elements.initialInvestment, elements.monthlyContribution, elements.years, elements.annualReturn, elements.inflationRate].forEach((input) => {
   input.addEventListener("input", updateProjection);
 });
