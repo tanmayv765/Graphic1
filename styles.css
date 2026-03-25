@@ -1,14 +1,14 @@
 :root {
-  --bg: #f7ece9;
-  --surface: rgba(255, 248, 245, 0.84);
-  --surface-strong: #fff7f4;
-  --ink: #261614;
-  --muted: #755854;
-  --accent: #b42318;
-  --accent-soft: #f7d9d5;
-  --accent-2: #dc5f4b;
-  --line: rgba(38, 22, 20, 0.1);
-  --shadow: 0 22px 60px rgba(59, 23, 18, 0.14);
+  --bg: #edf6ef;
+  --surface: rgba(247, 253, 248, 0.84);
+  --surface-strong: #fbfffb;
+  --ink: #14261a;
+  --muted: #577060;
+  --accent: #1f7a3d;
+  --accent-soft: #d9f1df;
+  --accent-2: #58b368;
+  --line: rgba(20, 38, 26, 0.1);
+  --shadow: 0 22px 60px rgba(24, 60, 32, 0.14);
 }
 
 * {
@@ -21,9 +21,9 @@ body {
   font-family: "Avenir Next", "Trebuchet MS", sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(180, 35, 24, 0.18), transparent 30%),
-    radial-gradient(circle at top right, rgba(220, 95, 75, 0.18), transparent 28%),
-    linear-gradient(180deg, #fff5f2 0%, #f3dfda 100%);
+    radial-gradient(circle at top left, rgba(31, 122, 61, 0.18), transparent 30%),
+    radial-gradient(circle at top right, rgba(88, 179, 104, 0.18), transparent 28%),
+    linear-gradient(180deg, #f7fff8 0%, #dfefdf 100%);
 }
 
 .page-shell {
@@ -126,7 +126,7 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   background:
-    linear-gradient(145deg, rgba(180, 35, 24, 0.96), rgba(104, 24, 18, 0.96)),
+    linear-gradient(145deg, rgba(31, 122, 61, 0.96), rgba(18, 80, 39, 0.96)),
     var(--surface);
   color: #f6fffc;
 }
@@ -202,8 +202,8 @@ select {
 
 input:focus,
 select:focus {
-  outline: 2px solid rgba(180, 35, 24, 0.18);
-  border-color: rgba(180, 35, 24, 0.45);
+  outline: 2px solid rgba(31, 122, 61, 0.18);
+  border-color: rgba(31, 122, 61, 0.45);
 }
 
 .preset-notes {
@@ -248,7 +248,7 @@ select:focus {
 .chart-panel {
   border: 1px solid var(--line);
   border-radius: 22px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 244, 241, 0.98));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(244, 255, 246, 0.98));
   padding: 18px;
 }
 
@@ -325,11 +325,11 @@ select:focus {
 }
 
 .compare-bar-stocks {
-  background: linear-gradient(90deg, #b42318, #dc5f4b);
+  background: linear-gradient(90deg, #1f7a3d, #58b368);
 }
 
 .compare-bar-bonds {
-  background: linear-gradient(90deg, #8e1c14, #c63d2d);
+  background: linear-gradient(90deg, #356b3f, #81b78a);
 }
 
 .compare-takeaway {
@@ -359,7 +359,7 @@ tbody tr:last-child td {
 }
 
 tbody tr:hover {
-  background: rgba(180, 35, 24, 0.05);
+  background: rgba(31, 122, 61, 0.05);
 }
 
 @media (max-width: 960px) {

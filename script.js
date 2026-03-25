@@ -191,21 +191,21 @@ function renderChart(yearlyData) {
 
   const markers = points
     .map((point) => `
-      <circle cx="${point.x}" cy="${point.y}" r="4.5" fill="#b42318" />
+      <circle cx="${point.x}" cy="${point.y}" r="4.5" fill="#1f7a3d" />
     `)
     .join("");
 
   svg.innerHTML = `
     <defs>
       <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#b42318" stop-opacity="0.32" />
-        <stop offset="100%" stop-color="#b42318" stop-opacity="0.02" />
+        <stop offset="0%" stop-color="#1f7a3d" stop-opacity="0.32" />
+        <stop offset="100%" stop-color="#1f7a3d" stop-opacity="0.02" />
       </linearGradient>
     </defs>
     ${guideLines}
     <line x1="${padding.left}" y1="${height - padding.bottom}" x2="${padding.left + innerWidth}" y2="${height - padding.bottom}" stroke="rgba(22, 33, 29, 0.18)" />
     <path d="${areaPath}" fill="url(#areaFill)"></path>
-    <path d="${linePath}" fill="none" stroke="#b42318" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="${linePath}" fill="none" stroke="#1f7a3d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
     ${markers}
     ${yearLabels}
   `;
