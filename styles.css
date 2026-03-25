@@ -1,14 +1,14 @@
 :root {
-  --bg: #f3efe7;
-  --surface: rgba(255, 252, 246, 0.82);
-  --surface-strong: #fffaf0;
-  --ink: #16211d;
-  --muted: #5d6a64;
-  --accent: #0f766e;
-  --accent-soft: #d4f2ec;
-  --accent-2: #f59e0b;
-  --line: rgba(22, 33, 29, 0.1);
-  --shadow: 0 22px 60px rgba(33, 36, 22, 0.12);
+  --bg: #f7ece9;
+  --surface: rgba(255, 248, 245, 0.84);
+  --surface-strong: #fff7f4;
+  --ink: #261614;
+  --muted: #755854;
+  --accent: #b42318;
+  --accent-soft: #f7d9d5;
+  --accent-2: #dc5f4b;
+  --line: rgba(38, 22, 20, 0.1);
+  --shadow: 0 22px 60px rgba(59, 23, 18, 0.14);
 }
 
 * {
@@ -21,9 +21,9 @@ body {
   font-family: "Avenir Next", "Trebuchet MS", sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 30%),
-    radial-gradient(circle at top right, rgba(245, 158, 11, 0.18), transparent 28%),
-    linear-gradient(180deg, #fbf7ef 0%, #efe7d8 100%);
+    radial-gradient(circle at top left, rgba(180, 35, 24, 0.18), transparent 30%),
+    radial-gradient(circle at top right, rgba(220, 95, 75, 0.18), transparent 28%),
+    linear-gradient(180deg, #fff5f2 0%, #f3dfda 100%);
 }
 
 .page-shell {
@@ -32,7 +32,6 @@ body {
   padding: 32px 0 48px;
 }
 
-<<<<<<< HEAD
 .site-nav {
   display: flex;
   gap: 10px;
@@ -56,8 +55,6 @@ body {
   border-color: transparent;
 }
 
-=======
->>>>>>> 0fc5225c07d88a47848b3757f862a1bba7ecfca6
 .hero {
   display: grid;
   grid-template-columns: 1.4fr 0.9fr;
@@ -66,13 +63,10 @@ body {
   margin-bottom: 24px;
 }
 
-<<<<<<< HEAD
 .simple-hero h1 {
   max-width: 12ch;
 }
 
-=======
->>>>>>> 0fc5225c07d88a47848b3757f862a1bba7ecfca6
 .hero-copy,
 .hero-card,
 .panel {
@@ -132,7 +126,7 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   background:
-    linear-gradient(145deg, rgba(15, 118, 110, 0.95), rgba(18, 51, 46, 0.95)),
+    linear-gradient(145deg, rgba(180, 35, 24, 0.96), rgba(104, 24, 18, 0.96)),
     var(--surface);
   color: #f6fffc;
 }
@@ -208,8 +202,8 @@ select {
 
 input:focus,
 select:focus {
-  outline: 2px solid rgba(15, 118, 110, 0.18);
-  border-color: rgba(15, 118, 110, 0.45);
+  outline: 2px solid rgba(180, 35, 24, 0.18);
+  border-color: rgba(180, 35, 24, 0.45);
 }
 
 .preset-notes {
@@ -254,7 +248,7 @@ select:focus {
 .chart-panel {
   border: 1px solid var(--line);
   border-radius: 22px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 250, 240, 0.96));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 244, 241, 0.98));
   padding: 18px;
 }
 
@@ -276,7 +270,6 @@ select:focus {
   overflow-x: auto;
 }
 
-<<<<<<< HEAD
 .compare-notes,
 .compare-summary {
   display: grid;
@@ -332,19 +325,17 @@ select:focus {
 }
 
 .compare-bar-stocks {
-  background: linear-gradient(90deg, #0f766e, #34d399);
+  background: linear-gradient(90deg, #b42318, #dc5f4b);
 }
 
 .compare-bar-bonds {
-  background: linear-gradient(90deg, #b7791f, #f59e0b);
+  background: linear-gradient(90deg, #8e1c14, #c63d2d);
 }
 
 .compare-takeaway {
   font-size: clamp(1.1rem, 2.4vw, 1.6rem);
 }
 
-=======
->>>>>>> 0fc5225c07d88a47848b3757f862a1bba7ecfca6
 table {
   width: 100%;
   border-collapse: collapse;
@@ -368,7 +359,7 @@ tbody tr:last-child td {
 }
 
 tbody tr:hover {
-  background: rgba(15, 118, 110, 0.05);
+  background: rgba(180, 35, 24, 0.05);
 }
 
 @media (max-width: 960px) {
@@ -397,13 +388,9 @@ tbody tr:hover {
   }
 
   .control-grid,
-<<<<<<< HEAD
   .metric-grid,
   .compare-notes,
   .compare-summary {
-=======
-  .metric-grid {
->>>>>>> 0fc5225c07d88a47848b3757f862a1bba7ecfca6
     grid-template-columns: 1fr;
   }
 
