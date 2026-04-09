@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vendor Payments (AP) — US (Blusa)</title>
+  <style>
+    /* ── Design tokens (from process-flow-template / styles.css) ── */
+    :root {
+      --bg: #edf6ef;
+      --surface: rgba(247, 253, 248, 0.84);
+      --surface-strong: #fbfffb;
+      --ink: #14261a;
+      --muted: #577060;
+      --accent: #1f7a3d;
+      --accent-soft: #d9f1df;
+      --accent-2: #58b368;
+      --line: rgba(20, 38, 26, 0.1);
+      --shadow: 0 22px 60px rgba(24, 60, 32, 0.14);
+      /* Flowchart semantic tokens */
+      --manual-clr: #374151;
+      --manual-bg: #f3f4f6;
+      --manual-bdr: #d1d5db;
+      --ns-clr: #c2410c;
+      --ns-bg: #fff7ed;
+      --ns-bdr: #fed7aa;
+      --gap-clr: #991b1b;
+      --gap-bg: #fef2f2;
+      --gap-bdr: #fca5a5;
+      --dec-clr: #1e3a5f;
+      --dec-bg: #dbeafe;
+      --dec-bdr: #93c5fd;
+      --out-clr: #14532d;
+      --out-bg: #dcfce7;
+      --out-bdr: #86efac;
+      --amb-clr: #78350f;
+      --amb-bg: #fffbeb;
+      --amb-bdr: #fde68a;
+      --high-clr: #991b1b;
+      --high-bg: #fef2f2;
+      --high-bdr: #fca5a5;
+      --med-clr: #78350f;
+      --med-bg: #fffbeb;
+      --med-bdr: #fde68a;
+      --blue-clr: #1e40af;
+      --blue-bg: #eff6ff;
+      --blue-bdr: #93c5fd;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Avenir Next", "Trebuchet MS", sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(31,122,61,0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(88,179,104,0.18), transparent 28%),
+        linear-gradient(180deg, #f7fff8 0%, #dfefdf 100%);
+    }
+
+    .page-shell {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 72px;
+    }
+
+    /* ── Shared panel base ── */
+    .glass {
+      backdrop-filter: blur(14px);
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.55);
+      box-shadow: var(--shadow);
+      border-radius: 28px;
+    }
+
+    /* ── Typography ── */
+    h1, h2, h3 {
+      font-family: "Iowan Old Style", "Palatino Linotype", serif;
+      margin: 0;
+    }
+    h1 { font-size: clamp(1.9rem, 3.2vw, 2.8rem); line-height: 1.1; }
+    h2 { font-size: 1.35rem; }
+    h3 { font-size: 1rem; }
+    p  { margin: 0; }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 8px;
+    }
+
+    /* ════════════════════════════════════════
+       HEADER
+    ════════════════════════════════════════ */
+    .page-header {
+      padding: 30px 36px 26px;
+      margin-bottom: 18px;
+    }
+
+    .page-header h1 { margin-bottom: 6px; }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.97rem;
+      margin-bottom: 18px;
+    }
+
+    .meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 13px;
+      border-radius: 999px;
+      font-size: 0.79rem;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.75);
+      color: var(--ink);
+    }
+    .pill-draft  { background: #fef3c7; border-color: #fcd34d; color: #78350f; }
+    .pill-entity { background: var(--accent-soft); border-color: #86efac; color: var(--accent); }
+
+    /* ════════════════════════════════════════
+       LEGEND BAR
+    ════════════════════════════════════════ */
+    .legend-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+      background: rgba(247,253,248,0.92);
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 4px 18px rgba(24,60,32,0.07);
+      border-radius: 18px;
+      padding: 13px 22px;
+      margin-bottom: 28px;
+    }
+
+    .legend-label {
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .swatch {
+      width: 30px;
+      height: 14px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .sw-manual  { background: var(--manual-bg); border: 2px solid var(--manual-bdr); }
+    .sw-ns      { background: var(--ns-bg);     border: 2px solid var(--ns-bdr); }
+    .sw-gap     { background: var(--gap-bg);    border: 2px dashed var(--gap-bdr); }
+    .sw-output  { background: var(--out-bg);    border: 2px solid var(--out-bdr); }
+    .sw-dec     { background: var(--dec-bg);    border: 2px solid var(--dec-bdr); }
+
+    /* ════════════════════════════════════════
+       FLOW CANVAS
+    ════════════════════════════════════════ */
+    .flow-canvas {
+      max-width: 940px;
+      margin: 0 auto 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Vertical connector */
+    .v-conn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 44px;
+      flex-shrink: 0;
+    }
+    .v-conn-line {
+      width: 2px;
+      flex: 1;
+      background: linear-gradient(180deg, rgba(87,112,96,0.35), rgba(87,112,96,0.25));
+    }
+    .v-conn-arrow {
+      width: 0; height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 10px solid rgba(87,112,96,0.32);
+    }
+
+    /* ── Trigger / process node cards ── */
+    .node-wrap {
+      width: 520px;
+    }
+
+    .node-card {
+      border-radius: 20px;
+      padding: 20px 22px;
+      border: 1.5px solid var(--line);
+      background: var(--surface-strong);
+      box-shadow: 0 4px 22px rgba(24,60,32,0.08);
+    }
+
+    .node-card.trigger {
+      border-color: rgba(31,122,61,0.25);
+      background: linear-gradient(135deg,rgba(31,122,61,0.07),rgba(88,179,104,0.05));
+    }
+
+    .node-card.manual-step {
+      border-color: var(--manual-bdr);
+      background: var(--manual-bg);
+    }
+
+    .node-header {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.67rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 999px;
+    }
+    .badge-trigger { background: var(--accent-soft); color: var(--accent); }
+    .badge-manual  { background: var(--manual-bdr); color: #374151; }
+    .badge-step    { font-size: 0.7rem; font-weight: 700; color: var(--muted); }
+
+    .node-title {
+      font-family: "Iowan Old Style", "Palatino Linotype", serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .node-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 9px;
+    }
+
+    .meta-kv {
+      font-size: 0.81rem;
+      color: var(--muted);
+    }
+    .meta-kv strong { color: var(--ink); font-weight: 700; }
+
+    .node-desc {
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Gap callout */
+    .gap-callout {
+      margin-top: 11px;
+      border-radius: 11px;
+      border: 1.5px dashed var(--gap-bdr);
+      background: var(--gap-bg);
+      padding: 9px 13px;
+      font-size: 0.8rem;
+      color: var(--gap-clr);
+      line-height: 1.45;
+    }
+    .gap-callout .gap-lbl {
+      font-weight: 800;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    /* IO footer */
+    .io-footer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .io-lbl {
+      font-size: 0.66rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 3px;
+    }
+    .io-in  .io-lbl { color: var(--muted); }
+    .io-out .io-lbl { color: var(--accent); }
+    .io-val { font-size: 0.81rem; color: var(--ink); line-height: 1.4; }
+
+    /* ── Trigger pill label ── */
+    .trigger-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 13px;
+      background: rgba(31,122,61,0.1);
+      border: 1px solid rgba(31,122,61,0.25);
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 9px;
+    }
+
+    /* ════════════════════════════════════════
+       DECISION DIAMOND ROWS
+    ════════════════════════════════════════ */
+    .diamond-level {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 220px 1fr;
+      align-items: center;
+      gap: 0;
+    }
+
+    .d-left  { display: flex; justify-content: flex-end; align-items: center; }
+    .d-mid   { display: flex; flex-direction: column; align-items: center; }
+    .d-right { display: flex; align-items: center; }
+
+    /* SVG diamond sits in d-mid */
+    .diamond-svg { display: block; overflow: visible; }
+
+    .down-path-label {
+      margin-top: 5px;
+      font-size: 0.71rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: rgba(255,255,255,0.85);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 2px 9px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* Horizontal connector out of diamond */
+    .h-conn {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .h-conn-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      padding: 2px 7px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      white-space: nowrap;
+      margin-right: 5px;
+    }
+    .h-conn-line {
+      height: 2px;
+      width: 36px;
+      background: rgba(87,112,96,0.28);
+      flex-shrink: 0;
+    }
+    .h-conn-arrow {
+      width: 0; height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 8px solid rgba(87,112,96,0.28);
+      flex-shrink: 0;
+      margin-right: 8px;
+    }
+
+    /* Branch cards */
+    .branch-card {
+      border-radius: 15px;
+      padding: 13px 15px;
+      border: 1.5px solid;
+      max-width: 260px;
+    }
+    .branch-card.grey {
+      background: #f9fafb;
+      border-color: #d1d5db;
+    }
+    .branch-card.amber {
+      background: var(--amb-bg);
+      border-color: var(--amb-bdr);
+    }
+    .branch-title {
+      font-weight: 800;
+      font-size: 0.82rem;
+      margin-bottom: 5px;
+      color: var(--ink);
+    }
+    .branch-body {
+      font-size: 0.77rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+    .dead-end-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #9ca3af;
+      margin: 7px auto 0;
+    }
+    .branch-tag {
+      display: inline-block;
+      margin-top: 7px;
+      margin-right: 4px;
+      font-size: 0.67rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+    .btag-grey  { background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; }
+    .btag-amber { background: var(--amb-bg); color: var(--amb-clr); border: 1px solid var(--amb-bdr); }
+
+    /* ════════════════════════════════════════
+       DOWNSTREAM OUTPUT BAR
+    ════════════════════════════════════════ */
+    .output-bar-wrap {
+      width: 520px;
+      margin-top: 0;
+    }
+    .output-eyebrow {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--out-clr);
+      background: var(--out-bg);
+      border: 1px solid var(--out-bdr);
+      border-radius: 999px;
+      padding: 3px 11px;
+      margin-bottom: 9px;
+    }
+    .output-row {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+    }
+    .output-node {
+      flex: 1;
+      border-radius: 14px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .output-node.primary {
+      background: linear-gradient(135deg, #15803d, #16a34a);
+      color: #f0fdf4;
+    }
+    .output-node.downstream {
+      background: linear-gradient(135deg, #0f5132, #15803d);
+      color: #f0fdf4;
+    }
+    .output-node-lbl {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.78;
+      margin-bottom: 4px;
+    }
+    .output-node-val {
+      font-family: "Iowan Old Style", "Palatino Linotype", serif;
+      font-size: 0.97rem;
+      font-weight: 700;
+    }
+    .output-arrow-mid {
+      display: flex;
+      align-items: center;
+      color: var(--accent-2);
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    /* ════════════════════════════════════════
+       SECTION WRAPPER
+    ════════════════════════════════════════ */
+    .section-wrap {
+      padding: 26px 28px;
+      margin-bottom: 22px;
+    }
+
+    .section-hd {
+      margin-bottom: 20px;
+    }
+    .section-hd h2 { margin-bottom: 4px; }
+    .section-hd p  { font-size: 0.87rem; color: var(--muted); }
+
+    /* ════════════════════════════════════════
+       EXCEPTIONS PANEL
+    ════════════════════════════════════════ */
+    .exc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+    }
+
+    .exc-card {
+      border-radius: 17px;
+      padding: 16px;
+      background: var(--surface-strong);
+      border: 1.5px solid var(--line);
+    }
+    .exc-num {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .exc-title {
+      font-family: "Iowan Old Style", "Palatino Linotype", serif;
+      font-size: 0.93rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .exc-body {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .exc-tag {
+      display: inline-block;
+      font-size: 0.67rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-top: 8px;
+      margin-right: 4px;
+    }
+    .etag-grey  { background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; }
+    .etag-amber { background: var(--amb-bg); color: var(--amb-clr); border: 1px solid var(--amb-bdr); }
+    .etag-green { background: var(--accent-soft); color: var(--accent); border: 1px solid #86efac; }
+
+    /* ════════════════════════════════════════
+       VOLUME & FREQUENCY
+    ════════════════════════════════════════ */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+    }
+    .stat-tile {
+      border-radius: 17px;
+      padding: 18px 14px;
+      background: var(--surface-strong);
+      border: 1.5px solid var(--line);
+      text-align: center;
+    }
+    .stat-icon { font-size: 1.3rem; margin-bottom: 8px; }
+    .stat-val {
+      font-family: "Iowan Old Style", "Palatino Linotype", serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+    .stat-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-style: italic;
+      font-family: "Avenir Next", "Trebuchet MS", sans-serif;
+      display: block;
+      margin-top: 2px;
+    }
+    .stat-lbl {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-top: 7px;
+    }
+    .est-badge {
+      display: inline-block;
+      font-size: 0.64rem;
+      font-weight: 700;
+      font-style: italic;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+      color: #78350f;
+      margin-top: 5px;
+    }
+
+    /* ════════════════════════════════════════
+       CURRENT vs FUTURE TABLE
+    ════════════════════════════════════════ */
+    .sys-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .sys-table th,
+    .sys-table td {
+      text-align: left;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.86rem;
+      vertical-align: top;
+    }
+    .sys-table thead th {
+      font-family: "Iowan Old Style", "Palatino Linotype", serif;
+      font-size: 0.84rem;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .sys-table thead th:first-child { border-radius: 10px 0 0 0; }
+    .sys-table thead th:last-child  { border-radius: 0 10px 0 0; }
+    .sys-table tbody tr:last-child td { border-bottom: none; }
+    .sys-table tbody tr:hover { background: rgba(31,122,61,0.04); }
+    .col-aspect { font-weight: 700; width: 25%; }
+    .col-current { color: var(--muted); width: 37.5%; }
+    .col-future  { width: 37.5%; }
+    .unknown { color: #9ca3af; font-style: italic; }
+
+    /* ════════════════════════════════════════
+       OPEN QUESTIONS
+    ════════════════════════════════════════ */
+    .q-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+    }
+    .q-card {
+      border-radius: 17px;
+      padding: 17px;
+      border: 1.5px solid;
+    }
+    .q-card.high   { background: var(--high-bg);  border-color: var(--high-bdr); }
+    .q-card.medium { background: var(--med-bg);   border-color: var(--med-bdr); }
+
+    .q-card-hd {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .sev-badge {
+      font-size: 0.63rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .sev-high   { background: #b91c1c; color: #fff; }
+    .sev-medium { background: #d97706; color: #fff; }
+    .q-num { font-size: 0.7rem; font-weight: 700; color: var(--muted); }
+
+    .q-title {
+      font-family: "Iowan Old Style", "Palatino Linotype", serif;
+      font-size: 0.93rem;
+      font-weight: 700;
+      margin-bottom: 7px;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+    .q-ctx {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .q-ask {
+      border-radius: 9px;
+      background: var(--blue-bg);
+      border: 1px solid var(--blue-bdr);
+      padding: 8px 11px;
+      font-size: 0.79rem;
+      color: var(--blue-clr);
+      line-height: 1.45;
+    }
+    .q-ask::before {
+      content: "Ask → ";
+      font-weight: 800;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .diamond-level { grid-template-columns: 0 220px 1fr; }
+      .d-left { display: none; }
+    }
+    @media (max-width: 720px) {
+      .exc-grid, .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .q-grid { grid-template-columns: 1fr; }
+      .node-wrap, .output-bar-wrap { width: 100%; }
+      .flow-canvas { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+
+  <!-- ══ HEADER ══ -->
+  <header class="glass page-header">
+    <p class="eyebrow">Process Flow · Purchase to Pay &amp; Staff Expenses</p>
+    <h1>Vendor Payments (AP) — US (Blusa)</h1>
+    <p class="subtitle">Purchase to Pay &amp; Staff Expenses · Future State Process Documentation</p>
+    <div class="meta-pills">
+      <span class="pill pill-draft">Status: Draft</span>
+      <span class="pill">Interview: 2026-03-12</span>
+      <span class="pill">Interviewees: Lisette Roa · Lauren Reiser</span>
+      <span class="pill pill-entity">Blusa</span>
+      <span class="pill pill-entity">Mexico</span>
+      <span class="pill pill-entity">Brazil</span>
+      <span class="pill pill-entity">Blink</span>
+      <span class="pill">Generated: 2026-03-25</span>
+    </div>
+  </header>
+
+  <!-- ══ LEGEND ══ -->
+  <div class="legend-bar">
+    <span class="legend-label">Legend</span>
+    <div class="legend-item">
+      <div class="swatch sw-manual"></div>
+      <span style="color:var(--manual-clr)">Manual step</span>
+    </div>
+    <div class="legend-item">
+      <div class="swatch sw-ns"></div>
+      <span style="color:var(--ns-clr)">NetSuite-driven</span>
+    </div>
+    <div class="legend-item">
+      <div class="swatch sw-gap"></div>
+      <span style="color:var(--gap-clr)">Gap / Blocker</span>
+    </div>
+    <div class="legend-item">
+      <div class="swatch sw-output"></div>
+      <span style="color:var(--out-clr)">Output / downstream</span>
+    </div>
+    <div class="legend-item">
+      <div class="swatch sw-dec"></div>
+      <span style="color:var(--dec-clr)">Decision point</span>
+    </div>
+  </div>
+
+  <!-- ══ MAIN FLOW CANVAS ══ -->
+  <div class="flow-canvas">
+
+    <!-- TRIGGER CARD -->
+    <div class="node-wrap">
+      <div class="trigger-pill">▲ Upstream trigger</div>
+      <div class="node-card trigger">
+        <div class="node-header">
+          <span class="badge badge-trigger">Trigger</span>
+          <span class="badge-step">Predecessor: Vendor Invoice Receipt &amp; Entry</span>
+        </div>
+        <div class="node-title">Vendor Invoice Approved &amp; Due</div>
+        <div class="node-desc">
+          Vendor invoices are approved and due for payment in the accounting system.
+          Finance team initiates manual payment entry into the bank portal.
+        </div>
+        <div class="io-footer">
+          <div class="io-in">
+            <div class="io-lbl">Source system (current)</div>
+            <div class="io-val">QuickBooks</div>
+          </div>
+          <div class="io-out">
+            <div class="io-lbl">Source system (future)</div>
+            <div class="io-val">NetSuite</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ↓ connector -->
+    <div class="v-conn">
+      <div class="v-conn-line"></div>
+      <div class="v-conn-arrow"></div>
+    </div>
+
+    <!-- ══ DECISION DIAMOND 1 ══ -->
+    <div class="diamond-level">
+      <div class="d-left"><!-- empty left --></div>
+
+      <div class="d-mid">
+        <svg class="diamond-svg" width="220" height="110" viewBox="0 0 220 110" role="img" aria-label="Decision: Which entity is the payment for?">
+          <polygon points="110,4 216,55 110,106 4,55"
+            fill="#dbeafe" stroke="#93c5fd" stroke-width="2"/>
+          <text x="110" y="47" text-anchor="middle"
+            font-family="Avenir Next, Trebuchet MS, sans-serif"
+            font-size="12.5" font-weight="700" fill="#1e3a5f">Which entity</text>
+          <text x="110" y="63" text-anchor="middle"
+            font-family="Avenir Next, Trebuchet MS, sans-serif"
+            font-size="12.5" font-weight="700" fill="#1e3a5f">is the payment for?</text>
+        </svg>
+        <div class="down-path-label">Blusa / Mexico / Blink → Lisette processes</div>
+      </div>
+
+      <div class="d-right">
+        <div class="h-conn">
+          <span class="h-conn-label">Brazil</span>
+          <div class="h-conn-line"></div>
+          <div class="h-conn-arrow"></div>
+        </div>
+        <div class="branch-card grey">
+          <div class="branch-title">Outsourced to Solera Mendez</div>
+          <div class="branch-body">All Brazil transactions handled by external accounting firm. BrainLabs retains Xero (current) / NetSuite (future) for tracking only. Lisette does not process payments directly.</div>
+          <span class="branch-tag btag-grey">Dead-end branch</span>
+          <div class="dead-end-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ↓ connector -->
+    <div class="v-conn">
+      <div class="v-conn-line"></div>
+      <div class="v-conn-arrow"></div>
+    </div>
+
+    <!-- STAGE 1 -->
+    <div class="node-wrap">
+      <div class="node-card manual-step">
+        <div class="node-header">
+          <span class="badge badge-manual">Manual</span>
+          <span class="badge-step">Step 1</span>
+        </div>
+        <div class="node-title">Manual Bank Portal Entry</div>
+        <div class="node-meta">
+          <span class="meta-kv"><strong>Actor:</strong> Lisette Roa</span>
+          <span class="meta-kv"><strong>System:</strong> First Financial Bank portal</span>
+        </div>
+        <div class="node-desc">
+          Vendor payments are manually entered one-by-one into the First Financial Bank portal.
+          Each payment is entered individually — no bulk payment upload capability is used.
+        </div>
+        <div class="gap-callout">
+          <span class="gap-lbl">⚠ Gap</span>
+          No bulk upload or file-based payment loading documented — pain point shared across all regions. Future state (post-NetSuite) is unknown — no integration or bulk upload with First Financial Bank documented.
+        </div>
+        <div class="io-footer">
+          <div class="io-in">
+            <div class="io-lbl">Input</div>
+            <div class="io-val">Approved vendor bills due for payment (QuickBooks current / NetSuite future)</div>
+          </div>
+          <div class="io-out">
+            <div class="io-lbl">Output</div>
+            <div class="io-val">Individual payments loaded in bank portal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ↓ connector -->
+    <div class="v-conn">
+      <div class="v-conn-line"></div>
+      <div class="v-conn-arrow"></div>
+    </div>
+
+    <!-- ══ DECISION DIAMOND 2 ══ -->
+    <div class="diamond-level">
+      <div class="d-left"><!-- empty left --></div>
+
+      <div class="d-mid">
+        <svg class="diamond-svg" width="220" height="110" viewBox="0 0 220 110" role="img" aria-label="Decision: Bill.com pass-through?">
+          <polygon points="110,4 216,55 110,106 4,55"
+            fill="#dbeafe" stroke="#93c5fd" stroke-width="2"/>
+          <text x="110" y="47" text-anchor="middle"
+            font-family="Avenir Next, Trebuchet MS, sans-serif"
+            font-size="12.5" font-weight="700" fill="#1e3a5f">Bill.com</text>
+          <text x="110" y="63" text-anchor="middle"
+            font-family="Avenir Next, Trebuchet MS, sans-serif"
+            font-size="12.5" font-weight="700" fill="#1e3a5f">pass-through?</text>
+        </svg>
+        <div class="down-path-label">No → Standard First Financial Bank entry</div>
+      </div>
+
+      <div class="d-right">
+        <div class="h-conn">
+          <span class="h-conn-label">Yes</span>
+          <div class="h-conn-line"></div>
+          <div class="h-conn-arrow"></div>
+        </div>
+        <div class="branch-card amber">
+          <div class="branch-title">Payment via Bill.com</div>
+          <div class="branch-body">Not a core platform — occasional payments flow through Bill.com for clients/vendors who use it. Post-NetSuite migration status is ambiguous; plan to migrate to NetSuite not confirmed as complete.</div>
+          <span class="branch-tag btag-amber">Post-NS status: ambiguous</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ↓ connector -->
+    <div class="v-conn">
+      <div class="v-conn-line"></div>
+      <div class="v-conn-arrow"></div>
+    </div>
+
+    <!-- STAGE 2 -->
+    <div class="node-wrap">
+      <div class="node-card manual-step">
+        <div class="node-header">
+          <span class="badge badge-manual">Manual</span>
+          <span class="badge-step">Step 2</span>
+        </div>
+        <div class="node-title">Payment Execution</div>
+        <div class="node-meta">
+          <span class="meta-kv"><strong>Actor:</strong> Lisette Roa</span>
+          <span class="meta-kv"><strong>System:</strong> First Financial Bank</span>
+        </div>
+        <div class="node-desc">
+          Payments are processed and executed through the First Financial Bank portal after
+          manual entry. Approval process, dual authorisation requirements, and execution
+          timelines are not documented.
+        </div>
+        <div class="gap-callout">
+          <span class="gap-lbl">⚠ Gap — Controls Risk</span>
+          No approval gate or dual-authorisation documented — potential controls gap. Segregation of duties unconfirmed. No dual-authorisation requirements or execution timelines in scope documentation.
+        </div>
+        <div class="io-footer">
+          <div class="io-in">
+            <div class="io-lbl">Input</div>
+            <div class="io-val">Payments loaded in bank portal (from Step 1)</div>
+          </div>
+          <div class="io-out">
+            <div class="io-lbl">Output</div>
+            <div class="io-val">Executed vendor payments</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ↓ connector -->
+    <div class="v-conn">
+      <div class="v-conn-line"></div>
+      <div class="v-conn-arrow"></div>
+    </div>
+
+    <!-- DOWNSTREAM OUTPUT BAR -->
+    <div class="output-bar-wrap">
+      <div class="output-eyebrow">Downstream outputs</div>
+      <div class="output-row">
+        <div class="output-node primary">
+          <div class="output-node-lbl">Output</div>
+          <div class="output-node-val">Executed Vendor Payments</div>
+        </div>
+        <div class="output-arrow-mid">→</div>
+        <div class="output-node downstream">
+          <div class="output-node-lbl">Flows to</div>
+          <div class="output-node-val">Bank Reconciliation</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /flow-canvas -->
+
+  <!-- ══ EXCEPTIONS PANEL ══ -->
+  <div class="glass section-wrap">
+    <div class="section-hd">
+      <h2>Exceptions &amp; Variations</h2>
+      <p>Entities and scenarios that diverge from the standard Blusa flow</p>
+    </div>
+    <div class="exc-grid">
+      <div class="exc-card">
+        <div class="exc-num">Exception 1</div>
+        <div class="exc-title">Mexico Entity Payments</div>
+        <div class="exc-body">Lisette processes Mexico AP through the same manual process. Banking arrangement for Mexico payments (same First Financial portal or separate relationship) is not documented.</div>
+        <span class="exc-tag etag-grey">Lisette handles</span>
+        <span class="exc-tag etag-green">Xero → NetSuite</span>
+      </div>
+      <div class="exc-card">
+        <div class="exc-num">Exception 2</div>
+        <div class="exc-title">Brazil Entity Payments</div>
+        <div class="exc-body">All transactions outsourced to external accounting firm (Solera Mendez). BrainLabs retains Xero (current) / NetSuite (future) for tracking only. Lisette does not make payments directly.</div>
+        <span class="exc-tag etag-grey">Outsourced</span>
+        <span class="exc-tag etag-green">NS for tracking</span>
+      </div>
+      <div class="exc-card">
+        <div class="exc-num">Exception 3</div>
+        <div class="exc-title">Blink (BL Digital Inc.)</div>
+        <div class="exc-body">GMP billing entity — Google contract sits here. Uses Xero (current) / NetSuite (future). Payment execution process for Blink not separately documented. Lauren Reiser involved.</div>
+        <span class="exc-tag etag-amber">Process undocumented</span>
+        <span class="exc-tag etag-green">Xero → NetSuite</span>
+      </div>
+      <div class="exc-card">
+        <div class="exc-num">Exception 4</div>
+        <div class="exc-title">Bill.com Pass-Through</div>
+        <div class="exc-body">Not a core platform — occasional payments flow through Bill.com for vendors/clients who use it. Post-NetSuite migration status is ambiguous; plan to migrate to NetSuite not confirmed as done.</div>
+        <span class="exc-tag etag-amber">Post-NS: ambiguous</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ VOLUME & FREQUENCY ══ -->
+  <div class="glass section-wrap">
+    <div class="section-hd">
+      <h2>Volume &amp; Frequency</h2>
+      <p>Metrics not documented in interviews — all values below are estimates only and must be validated</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat-tile">
+        <div class="stat-icon">📄</div>
+        <div class="stat-val">~150<span class="stat-sub">payments / month</span></div>
+        <div class="stat-lbl">Monthly Volume</div>
+        <span class="est-badge">(est.)</span>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-icon">📅</div>
+        <div class="stat-val" style="font-size:1rem;">Weekly<span class="stat-sub">every Monday (est.)</span></div>
+        <div class="stat-lbl">Frequency</div>
+        <span class="est-badge">(est.)</span>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-icon">⏱</div>
+        <div class="stat-val">~3 hrs<span class="stat-sub">per cycle / week</span></div>
+        <div class="stat-lbl">Hours Per Cycle</div>
+        <span class="est-badge">(est.)</span>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-val">~5 mins<span class="stat-sub">per payment</span></div>
+        <div class="stat-lbl">Time Per Payment</div>
+        <span class="est-badge">(est.)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CURRENT vs FUTURE TABLE ══ -->
+  <div class="glass section-wrap">
+    <div class="section-hd">
+      <h2>Current State vs. NetSuite Future State</h2>
+      <p>All 7 aspects from section 10 of source documentation</p>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="sys-table">
+        <thead>
+          <tr>
+            <th class="col-aspect">Aspect</th>
+            <th class="col-current">Current State</th>
+            <th class="col-future">NetSuite Future State</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-aspect">Accounting system (Blusa)</td>
+            <td class="col-current">QuickBooks</td>
+            <td>NetSuite</td>
+          </tr>
+          <tr>
+            <td class="col-aspect">Accounting system (Mexico, Blink, Brazil tracking)</td>
+            <td class="col-current">Xero</td>
+            <td>NetSuite</td>
+          </tr>
+          <tr>
+            <td class="col-aspect">Bank portal</td>
+            <td class="col-current">First Financial Bank portal (manual one-by-one entry)</td>
+            <td>First Financial Bank portal (retained — no change documented)</td>
+          </tr>
+          <tr>
+            <td class="col-aspect">Payment loading</td>
+            <td class="col-current">Each payment entered manually one-by-one into bank portal</td>
+            <td class="unknown">Not documented — no bulk upload or integration with First Financial documented for post-NS</td>
+          </tr>
+          <tr>
+            <td class="col-aspect">Multi-entity consolidation</td>
+            <td class="col-current">Multiple systems (QuickBooks + Xero) across entities</td>
+            <td>Single NetSuite instance across all US entities</td>
+          </tr>
+          <tr>
+            <td class="col-aspect">Brazil outsourcing</td>
+            <td class="col-current">Outsourced to Solera Mendez; Xero for tracking</td>
+            <td>Outsourced to Solera Mendez (retained); NetSuite for tracking</td>
+          </tr>
+          <tr>
+            <td class="col-aspect">Bill.com</td>
+            <td class="col-current">Not core; occasional pass-through</td>
+            <td class="unknown">Status ambiguous — plan to migrate to NetSuite not confirmed as done</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ OPEN QUESTIONS ══ -->
+  <div class="glass section-wrap">
+    <div class="section-hd">
+      <h2>Open Questions &amp; Gaps</h2>
+      <p>7 open items from interviews — <strong style="color:var(--high-clr)">HIGH severity</strong> (Q1–Q3) · <strong style="color:var(--amb-clr)">MEDIUM severity</strong> (Q4–Q7)</p>
+    </div>
+    <div class="q-grid">
+
+      <!-- Q1 HIGH -->
+      <div class="q-card high">
+        <div class="q-card-hd">
+          <span class="sev-badge sev-high">High</span>
+          <span class="q-num">Q1</span>
+        </div>
+        <div class="q-title">What is the payment volume and frequency for US vendor payments?</div>
+        <div class="q-ctx">Neither monthly volume nor cycle frequency is documented in the interviews. This information is required for process design and capacity planning post-NetSuite.</div>
+        <div class="q-ask">Confirm with Lisette Roa: how many vendor payments are processed per week/month, and on which days does the payment run occur?</div>
+      </div>
+
+      <!-- Q2 HIGH -->
+      <div class="q-card high">
+        <div class="q-card-hd">
+          <span class="sev-badge sev-high">High</span>
+          <span class="q-num">Q2</span>
+        </div>
+        <div class="q-title">Is there an approval or dual-authorisation step before or after payment execution in First Financial?</div>
+        <div class="q-ctx">No approval gate or segregation of duties is documented — potential controls gap. Dual-authorisation requirements and signatory authority are undocumented.</div>
+        <div class="q-ask">Ask Lisette Roa and Finance leadership: what authorisation controls exist in First Financial Bank portal? Who has signatory authority, and are payments reviewed before execution?</div>
+      </div>
+
+      <!-- Q3 HIGH -->
+      <div class="q-card high">
+        <div class="q-card-hd">
+          <span class="sev-badge sev-high">High</span>
+          <span class="q-num">Q3</span>
+        </div>
+        <div class="q-title">Will NetSuite enable bulk payment file upload to First Financial Bank, or will payments remain one-by-one?</div>
+        <div class="q-ctx">The manual one-by-one entry is the primary pain point shared across all regions. No bulk upload or bank integration is documented for the future state — the most critical efficiency gap.</div>
+        <div class="q-ask">Escalate to NetSuite implementation team and First Financial Bank: is a bulk payment file (e.g., NACHA/ACH) supported? Is this in scope for the NetSuite go-live?</div>
+      </div>
+
+      <!-- Q4 MEDIUM -->
+      <div class="q-card medium">
+        <div class="q-card-hd">
+          <span class="sev-badge sev-medium">Medium</span>
+          <span class="q-num">Q4</span>
+        </div>
+        <div class="q-title">What is the end-to-end time per payment cycle?</div>
+        <div class="q-ctx">Hours spent per cycle is documented as "NOT DOCUMENTED" in the post-NetSuite workflow metadata. Required for ROI analysis of any automation initiative.</div>
+        <div class="q-ask">Ask Lisette Roa to time-track the next two payment runs and report back total hours spent on data entry, review, and execution.</div>
+      </div>
+
+      <!-- Q5 MEDIUM -->
+      <div class="q-card medium">
+        <div class="q-card-hd">
+          <span class="sev-badge sev-medium">Medium</span>
+          <span class="q-num">Q5</span>
+        </div>
+        <div class="q-title">How are Mexico entity payments handled at the bank level — same First Financial portal or separate banking relationship?</div>
+        <div class="q-ctx">Lisette handles Mexico AP but the banking arrangement (same First Financial portal or separate bank) is not documented. Currency (USD vs MXN) also unclear.</div>
+        <div class="q-ask">Ask Lisette Roa: is Mexico's bank the same First Financial account, or a separate banking relationship? Are Mexico payments executed from a USD or MXN account?</div>
+      </div>
+
+      <!-- Q6 MEDIUM -->
+      <div class="q-card medium">
+        <div class="q-card-hd">
+          <span class="sev-badge sev-medium">Medium</span>
+          <span class="q-num">Q6</span>
+        </div>
+        <div class="q-title">What is the Bill.com migration status post-NetSuite?</div>
+        <div class="q-ctx">Plan to migrate to NetSuite noted but not confirmed as completed. Status is ambiguous per migration map. Some vendors/clients may still be routing payments through Bill.com.</div>
+        <div class="q-ask">Confirm with Finance ops team: is Bill.com still active post-NetSuite go-live? Which vendors/clients are still using it, and what is the migration timeline to NetSuite?</div>
+      </div>
+
+      <!-- Q7 MEDIUM -->
+      <div class="q-card medium">
+        <div class="q-card-hd">
+          <span class="sev-badge sev-medium">Medium</span>
+          <span class="q-num">Q7</span>
+        </div>
+        <div class="q-title">What is the payment process for Blink (BL Digital Inc.) — same First Financial Bank workflow or separate?</div>
+        <div class="q-ctx">Blink uses a different accounting system (Xero current / NetSuite future) and holds the Google GMP contract. The bank payment process for Blink is not separately documented.</div>
+        <div class="q-ask">Ask Lauren Reiser: how are Blink vendor payments executed? Same First Financial Bank portal as Blusa, or does Blink have a separate bank account and payment workflow?</div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /page-shell -->
+</body>
+</html>
